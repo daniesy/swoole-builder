@@ -14,9 +14,9 @@ How to use:
 
     FROM alpine:latest
 
-    RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community php81 \
-        php81-json \
-        php81-zip \
+    RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community php84 \
+        php84-json \
+        php84-zip \
         libstdc++ \
         file \
         go \
@@ -24,15 +24,15 @@ How to use:
         zip \
         openssl-dev
 
-    COPY --from=builder /usr/lib/php81/modules/swoole.so /usr/lib/php81/modules/
-    COPY --from=builder /usr/include/php81/ext/swoole /usr/include/php81/ext/swoole
+    COPY --from=builder /usr/lib/php84/modules/swoole.so /usr/lib/php84/modules/
+    COPY --from=builder /usr/include/php84/ext/swoole /usr/include/php84/ext/swoole
     COPY --from=osslsigncode /usr/local/bin/osslsigncode /usr/local/bin/osslsigncode
 
-    RUN touch /etc/php81/conf.d/swoole.ini && \
-        echo 'extension=swoole.so' > /etc/php81/conf.d/swoole.ini
+    RUN touch /etc/php84/conf.d/swoole.ini && \
+        echo 'extension=swoole.so' > /etc/php84/conf.d/swoole.ini
 
     RUN mkdir /app
     WORKDIR /app
     COPY . .
-    CMD ["php81", "server.php"]
+    CMD ["php84", "server.php"]
     EXPOSE 9501
